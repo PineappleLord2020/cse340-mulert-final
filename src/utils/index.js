@@ -50,4 +50,12 @@ const getNav = () => {
     return 'This feature is not implemented yet.';
 }
 
-export { configureStaticPaths, getNav };
+const requireAuth = (req, res, next) => {
+    if (!req.session.user) {
+        req.flash("error", "You must be logged in to access this page.");
+        return res.redirect("/login");
+    }
+    next();
+};
+
+export { configureStaticPaths, getNav, requireAuth };

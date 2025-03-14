@@ -5,6 +5,8 @@ import configNodeEnv from './src/middleware/node-env.js';
 import express from "express";
 import fileUploads from './src/middleware/file-uploads.js';
 import homeRoute from './src/routes/index.js';
+import contactRoute from './src/routes/contact/index.js';
+import accountRoute from './src/routes/account/index.js';
 import layouts from './src/middleware/layouts.js';
 import path from "path";
 import { configureStaticPaths } from './src/utils/index.js';
@@ -54,6 +56,8 @@ app.use(express.urlencoded({ extended: true }));
  */
 
 app.use('/', homeRoute);
+app.use('/contact/index.ejs', contactRoute);
+app.use('/account/index.ejs', accountRoute);
 
 /**
  * Start the server

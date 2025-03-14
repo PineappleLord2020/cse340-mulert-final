@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import { body, validationResult } from "express-validator";
+import { requireAuth } from "../../utils/index.js";
 
 const registrationValidation = [
     body("email")
