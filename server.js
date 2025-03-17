@@ -56,8 +56,8 @@ app.use(express.urlencoded({ extended: true }));
  */
 
 app.use('/', homeRoute);
-app.use('/contact/index.ejs', contactRoute);
-app.use('/account/index.ejs', accountRoute);
+app.use('/contact', contactRoute);
+app.use('/account', accountRoute);
 
 /**
  * Start the server
