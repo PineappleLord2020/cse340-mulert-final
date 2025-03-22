@@ -47,7 +47,14 @@ const configureStaticPaths = (app) => {
  * @returns {string} The navigation menu.
  */
 const getNav = () => {
-    return 'This feature is not implemented yet.';
+    return `
+    <nav>
+        <li><a href="/">Home</a></li>
+        <li><a href="/vehicles">Vehicles</a></li>
+        <li><a href="/account/register">Register</a></li>
+        <li><a href="/account/login">Login</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </nav>`;
 }
 
 const requireAuth = (req, res, next) => {
