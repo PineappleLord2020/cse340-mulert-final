@@ -61,7 +61,7 @@ router.post('/register', registrationValidation, async(req, res) => {
 });
 
 
-router.get('login', async(req, res) => {
+router.get('/login', async(req, res) => {
     res.render('account/login', {title: 'Login'});
 });
 

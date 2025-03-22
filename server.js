@@ -7,6 +7,7 @@ import fileUploads from './src/middleware/file-uploads.js';
 import homeRoute from './src/routes/index.js';
 import contactRoute from './src/routes/contact/index.js';
 import accountRoute from './src/routes/account/index.js';
+import vehicleRoute from './src/routes/vehicles/index.js';
 import layouts from './src/middleware/layouts.js';
 import path from "path";
 import { configureStaticPaths } from './src/utils/index.js';
@@ -58,6 +59,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', homeRoute);
 app.use('/contact', contactRoute);
 app.use('/account', accountRoute);
+app.use('/vehicles', vehicleRoute);
 
 /**
  * Start the server
