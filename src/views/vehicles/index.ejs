@@ -1,1 +1,10 @@
 <h1>Vehicle Catalog</h1>
+<div class="vehicles-grid">
+    <% vehicles.forEach((vehicle) => { %>
+        <div class="vehicle-card">
+            <img src="<%= vehicle.img_url %>" alt="Image of a <%= vehicle.name %>">
+            <h3><%= vehicle.name %></h3>
+            <p><%= vehicle.description %></p>
+        </div>
+    <% }); %>
+</div>
