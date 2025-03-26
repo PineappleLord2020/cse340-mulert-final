@@ -19,6 +19,7 @@ const userExist = async (email) => {
 const loginUser = async (email, password) => {
     const db = await dbClient;
     const sql = `SELECT * FROM users WHERE email = ${email} AND password = ${password}`;
+    
 };
 
 export {registerUser, userExist};
