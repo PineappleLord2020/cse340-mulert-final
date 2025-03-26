@@ -15,7 +15,6 @@ const registrationValidation = [
 const router = Router();
 
 router.get('/register', async(req, res) => {
-    res.locals.scripts.push("<script src='/js/registration.js'></script>");
     res.render('account/register', { title: 'Register' });
 });
 
@@ -76,29 +75,30 @@ router.get('/login', async(req, res) => {
 });
 
 
-router.post('/login', async(req, res) => {
+router.post('/login', registrationValidation, async(req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     const verify = await verifyUser;
 
     if (!email || !password || !confirmPW) {
         req.flash('error', 'One or more fields left blank. Please fill all fields.')
-        res.redirect('/register');
+        res.redirect('/account/register');
     }
 
     if (email.length < 1) {
         req.flash('error','Email was left blank.');
-        res.redirect('/register');
+        res.redirect('/account/register');
         return;
     }
 
     if (password.length < 8) {
         req.flash('error', "Password isn't long enough.")
-        res.redirect('/register');
+        res.redirect('/account/register');
         return;
     }
 
     verify(email, password);
+    req.session.user = {}
 });
 
 
