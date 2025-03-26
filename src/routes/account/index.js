@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { body, validationResult } from "express-validator";
 import { requireAuth } from "../../utils/index.js";
+import {registerUser, userExist} from "../../models/accounts/index.js"
 
 const registrationValidation = [
     body("email")
@@ -20,10 +21,12 @@ router.get('/register', async(req, res) => {
 
 
 router.post('/register', registrationValidation, async(req, res) => {
+    const fname = req.body.fname;
+    const lname = req.body.lname;
     const email = req.body.email;
     const password = req.body.password;
     const confirmPW = req.body.confirm_password;
-    const register = await registerUser;
+    /*const register = await registerUser;*/
 
     const results = validationResult(req);
     if (results.errors.length > 0) {
@@ -36,28 +39,35 @@ router.post('/register', registrationValidation, async(req, res) => {
 
     if (!email || !password || !confirmPW) {
         req.flash('error', 'One or more fields left blank. Please fill all fields.')
-        res.redirect('/register');
+        res.redirect('/account/register');
     }
 
     if (email.length < 1) {
-        res.redirect('/register');
         req.flash('error','Email was left blank.');
+        res.redirect('/account/register');
         return;
     }
 
     if (password.length < 8) {
-        res.redirect('/register');
-        req.flash('error', "Password isn't long enough.")
+        req.flash('error', "Password isn't long enough.");
+        res.redirect('/account/register');
         return;
     }
 
     if (!confirmPW || password === confirmPW ) {
-        res.redirect('/register');
-        req.flash('error', "Passwords don't match. Please try again.")
+        req.flash('error', "Passwords don't match. Please try again.");
+        res.redirect('/account/register');
         return;
     }
 
-    register(email, password);
+    if (userExist(email)) {
+        req.flash('error', "User already exists. Please Login.");
+        res.redirect('/account/login');
+        return;
+    }
+
+    await registerUser(fname, lname, email, password);
+    res.redirect('/account/login');
 });
 
 
@@ -77,14 +87,14 @@ router.post('/login', async(req, res) => {
     }
 
     if (email.length < 1) {
-        res.redirect('/register');
         req.flash('error','Email was left blank.');
+        res.redirect('/register');
         return;
     }
 
     if (password.length < 8) {
-        res.redirect('/register');
         req.flash('error', "Password isn't long enough.")
+        res.redirect('/register');
         return;
     }
 
