@@ -78,7 +78,7 @@ router.get('/login', async(req, res) => {
 router.post('/login', registrationValidation, async(req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    const verify = await verifyUser;
+    //const verify = await verifyUser;
 
     if (!email || !password || !confirmPW) {
         req.flash('error', 'One or more fields left blank. Please fill all fields.')
@@ -103,10 +103,10 @@ router.post('/login', registrationValidation, async(req, res) => {
         res.redirect('/account/login');
         return;
     }
-    
+
     delete userData.password;
     req.session.user = userData;
-    res.redirect('/account');
+    return res.redirect('/account');
 });
 
 
