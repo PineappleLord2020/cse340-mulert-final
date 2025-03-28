@@ -97,8 +97,16 @@ router.post('/login', registrationValidation, async(req, res) => {
         return;
     }
 
-    verify(email, password);
-    req.session.user = {}
+    const userData = userExist(email, password);
+    if (!userData) {
+        req.flash('error', "Email or Password incorrect. Please try again")
+        res.redirect('/account/login');
+        return;
+    }
+    
+    delete userData.password;
+    req.session.user = userData;
+    res.redirect('/account');
 });
 
 

@@ -7,19 +7,13 @@ const registerUser = async (fname, lname, email, password) => {
     return result.rows;
 };
 
-const userExist = async (email) => {
-    const db = await dbClient;
-    const sql = 'SELECT COUNT(*) AS count FROM users WHERE email = ?';
-    const values = [email];
-    const [rows] = await db.execute(sql, values);
-    
-    return rows[0].count > 0; 
-};
-
-const loginUser = async (email, password) => {
+const userExist = async (email, password) => {
     const db = await dbClient;
     const sql = `SELECT * FROM users WHERE email = ${email} AND password = ${password}`;
+    const values = [email, password];
+    const [user] = await db.execute(sql, values );
     
+    return user
 };
 
 export {registerUser, userExist};
