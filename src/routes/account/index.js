@@ -80,7 +80,7 @@ router.post('/login', registrationValidation, async(req, res) => {
     const password = req.body.password;
     //const verify = await verifyUser;
 
-    if (!email || !password || !confirmPW) {
+    if (!email || !password) {
         req.flash('error', 'One or more fields left blank. Please fill all fields.')
         res.redirect('/account/register');
     }
